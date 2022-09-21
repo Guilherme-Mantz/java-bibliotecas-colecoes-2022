@@ -13,16 +13,17 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import br.com.codar.utils.CompareUtil;
+import br.com.codar.utils.FormatUtil;
 
 public class FilesManager {
 
 	private static final String FORM = "formulario.txt";
-	private static String pathSystem = "C:\\Users\\Guilherme\\Desktop\\inscricoes_bluesoft\\";
+	private static final String PATH_SYSTEM = "C:\\Users\\Guilherme\\Desktop\\inscricoes_bluesoft\\";
 	private static int idForm = 0;
 	
 	public void addCandidate(List<String> answers) {
 		
-		String path = pathSystem + idForm + "-" + answers.get(0).toUpperCase().replaceAll("\\s+", "") + ".txt";
+		String path = PATH_SYSTEM + idForm + "-" + FormatUtil.formatString(answers.get(0)) + ".txt";
 		idForm++;
 		
 		try (BufferedWriter bfWriter = new BufferedWriter(new FileWriter(path))) {
@@ -90,13 +91,11 @@ public class FilesManager {
 	public List<List<String>> listAllCandidates(){
 		List<List<String>> listCandidates = new ArrayList<>();
 		
-		File archive[];
-		File path = new File(pathSystem);
-		archive = path.listFiles();
+		File archive[] = new File(PATH_SYSTEM).listFiles();
 
-		for(int i = 0; i < archive.length; i++){
+		for(File file : archive){
 			
-			try (BufferedReader bfReader = new BufferedReader(new FileReader(archive[i]))) {
+			try (BufferedReader bfReader = new BufferedReader(new FileReader(file))) {
 				
 				List<String> candidate = new ArrayList<>();
 				String line = bfReader.readLine();
@@ -119,13 +118,11 @@ public class FilesManager {
 	public List<List<String>> findCandidateByName(String nameCandidate){
 		List<List<String>> listCandidates = new ArrayList<>();
 		
-		File archive[];
-		File path = new File(pathSystem);
-		archive = path.listFiles();
+		File archive[] = new File(PATH_SYSTEM).listFiles();
 
-		for(int i = 0; i < archive.length; i++){
+		for(File file : archive){
 			
-			try (BufferedReader bfReader = new BufferedReader(new FileReader(archive[i]))) {
+			try (BufferedReader bfReader = new BufferedReader(new FileReader(file))) {
 				
 				List<String> candidate = new ArrayList<>();
 				String line = bfReader.readLine();
