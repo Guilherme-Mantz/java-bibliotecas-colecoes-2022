@@ -1,18 +1,34 @@
 package br.com.codar.application;
 
-import java.util.Scanner;
+import br.com.codar.application.options.Candidates;
+import br.com.codar.application.options.Forms;
+import br.com.codar.application.options.Questions;
+import br.com.codar.application.options.Register;
+import br.com.codar.factory.DaoFactory;
+import br.com.codar.manager.FilesManager;
+import br.com.codar.utils.DataInput;
 
 public class Program {
 
-	static Scanner input = new Scanner(System.in);
+	static DataInput input = new DataInput();
 	
+	static Register register;
+	static Questions questions;
+	static Candidates candidates;
+	static Forms forms;
+	
+	static FilesManager filesManager = DaoFactory.createFilesManagerDao();
 
 	public static void main(String[] args) {
-
+		register = new Register(input, filesManager);
+		questions = new Questions(input, filesManager);
+		candidates = new Candidates();
+		forms = new Forms();
+		
 		operations();
 	}
 
-	static void operations() {
+	public static void operations() {
 
 		System.out.println("------Bem vindo ao Movimento Codar 2022--------");
 		System.out.println("***** Selecione uma opção *****");
@@ -27,27 +43,27 @@ public class Program {
 
 		System.out.println();
 		System.out.print("Opção: ");
-		int selectedOption = input.nextInt();
-		input.nextLine();
-
+		int selectedOption = input.entryNumber();
+		input.entryString();
+		
 		switch (selectedOption) {
 		case 1:
-			Options.registration();
+			register.registration();
 			break;
 		case 2:
-			Options.addQuestion();
+			questions.addQuestion();
 			break;
 		case 3:
-			Options.removeQuestion();
+			questions.removeQuestion();
 			break;
 		case 4:
-			Options.listCandidates();
+			candidates.listCandidates();
 			break;
 		case 5:
-			Options.findCandidate();
+			candidates.findCandidate();
 			break;
 		case 6:
-			Options.validateForms();
+			forms.validateForms();
 			break;
 		case 7:
 			System.out.println("Programa Finalizado!");
