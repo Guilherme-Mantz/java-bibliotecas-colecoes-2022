@@ -49,7 +49,7 @@ class QuestionsTest {
 	}
 	
 	@Test
-	void DeveriaRemoverUmaPergunta() {
+	void deveriaRemoverUmaPergunta() {
 		int index = 5;
 		
 		List<String> listQuestions = listFakeQuestions();

@@ -38,6 +38,7 @@ public class Questions {
 		filesManager.addQuestionForm(newQuestion);
 
 		System.out.println("Pergunta adicionada ao formulário!");
+		Program.operations();
 
 	}
 
@@ -82,5 +83,6 @@ public class Questions {
 		}
 		
 		input.closeInput();
+		Program.operations();
 	}
 }

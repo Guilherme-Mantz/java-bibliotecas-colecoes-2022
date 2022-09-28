@@ -33,6 +33,11 @@ public class Register {
 				
 				System.out.println("P" + (index += 1) + "| " + question);
 				String age = input.entryString();
+				
+				while(age.equals("")) {
+					System.out.println("O campo não pode estar vazio!");
+					age = input.entryString();
+				}
 
 				if (!ValidationUtil.validAge(age)) {
 					System.exit(0);
@@ -42,6 +47,11 @@ public class Register {
 			else {
 				System.out.println("P" + (index += 1) + "| " + question);
 				String response = input.entryString();
+				
+				while(response.equals("")) {
+					System.out.println("O campo não pode estar vazio!");
+					response = input.entryString();
+				}
 
 				answers.add(response);
 			}
