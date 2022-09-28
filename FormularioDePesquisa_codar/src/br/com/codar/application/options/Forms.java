@@ -53,9 +53,7 @@ public class Forms {
 			
 			System.out.println("Esses são todos os formulários duplicados");
 			
-			for(List<String> candidate : allDuplicateds) {
-				System.out.println(candidate);
-			}
+			allDuplicateds.forEach(System.out::println);
 			
 			Program.operations();
 			break;

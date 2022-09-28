@@ -2,17 +2,21 @@ package br.com.codar.application.options;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import br.com.codar.application.Program;
-import br.com.codar.factory.DaoFactory;
 import br.com.codar.manager.FilesManager;
+import br.com.codar.utils.DataInput;
 
 public class Candidates {
 	
-	static Scanner input = new Scanner(System.in);
-	static FilesManager filesManager = DaoFactory.createFilesManagerDao();
+	private DataInput input;
+	private FilesManager filesManager;
+	
+	public Candidates(DataInput input, FilesManager filesManager) {
+		this.input = input;
+		this.filesManager = filesManager;
+	}
 	
 	public void listCandidates() {
 		System.out.println("Qual filtro deseja utilizar?");
@@ -21,7 +25,7 @@ public class Candidates {
 
 		List<List<String>> listCandidates = filesManager.listAllCandidates();
 
-		int optionFilter = input.nextInt();
+		int optionFilter = input.entryNumber();
 
 		switch (optionFilter) {
 		case 1:
@@ -35,7 +39,7 @@ public class Candidates {
 				System.out.println("Nome: " + candidate.get(0) + " | Idade: " + candidate.get(2));
 			}
 
-			input.nextLine();
+			input.entryString();
 			Program.operations();
 			break;
 		case 2:
@@ -46,7 +50,7 @@ public class Candidates {
 			countAges.forEach(
 					(age, count) -> System.out.println(count + " candidatos inscritos possuem " + age + " anos"));
 
-			input.nextLine();
+			input.entryNumber();
 			Program.operations();
 			break;
 		default:
@@ -59,8 +63,13 @@ public class Candidates {
 
 	public void findCandidate() {
 		System.out.print("Por favor informe o nome do candidato que procura: ");
-		String nameCandidate = input.nextLine();
+		String nameCandidate = input.entryString();
 
+		while(nameCandidate.equals("")) {
+			System.out.println("O campo não pode estar vazio!");
+			nameCandidate = input.entryString();
+		}
+		
 		List<List<String>> listCandidates = filesManager.findCandidateByName(nameCandidate);
 
 		if (listCandidates.size() == 0) {
@@ -68,10 +77,8 @@ public class Candidates {
 			Program.operations();
 		}
 
-		for (List<String> candidate : listCandidates) {
-			System.out.println(candidate);
-		}
-
+		listCandidates.forEach(System.out::println);
+		
 		Program.operations();
 
 	}

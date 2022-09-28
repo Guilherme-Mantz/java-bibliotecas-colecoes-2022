@@ -74,6 +74,22 @@ class RegisterTest {
 		register.registration();
 		/*cai no loop de mensagens*/
 	}
+	
+	@Test
+	void naoDeveriaCadastrarCandidatoCom16AnosOuMenos() {
+		List<String> listQuestions = listFakeQuestions();
+		List<String> example = Arrays.asList("Guilherme Mantz", "gui@gmail", "16");
+		
+		Mockito.when(filesManager.readerQuestions()).thenReturn(listQuestions);
+		
+		Mockito.when(input.entryString()).thenReturn(
+				example.get(0),
+				example.get(1),
+				example.get(2));
+		
+		register.registration();
+
+	}
 
 	private List<String> listFakeQuestions(){
 		List<String> listFakeQuestions = new ArrayList<>();

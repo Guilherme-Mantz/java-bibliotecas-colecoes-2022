@@ -22,7 +22,7 @@ public class Program {
 	public static void main(String[] args) {
 		register = new Register(input, filesManager);
 		questions = new Questions(input, filesManager);
-		candidates = new Candidates();
+		candidates = new Candidates(input, filesManager);
 		forms = new Forms();
 		
 		operations();
