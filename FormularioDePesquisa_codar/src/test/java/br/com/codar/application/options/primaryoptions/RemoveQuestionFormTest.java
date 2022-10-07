@@ -1,4 +1,4 @@
-package test.java.br.com.codar.application.options;
+package test.java.br.com.codar.application.options.primaryoptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,13 +12,13 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import br.com.codar.application.options.Questions;
+import br.com.codar.application.options.primaryoptions.RemoveQuestionForm;
 import br.com.codar.manager.FilesManager;
 import br.com.codar.utils.DataInput;
 
-class QuestionsTest {
+class RemoveQuestionFormTest {
 
-	private Questions questions;
+	private RemoveQuestionForm removeQuestion;
 	
 	@Mock
 	private DataInput input;
@@ -33,19 +33,7 @@ class QuestionsTest {
 	public void beforeEach() {
 		
 		MockitoAnnotations.openMocks(this);
-		this.questions = new Questions(input, filesManager);
-	}
-	
-	@Test
-	void adicionandoPerguntaNoFormulario() {
-		String testQuestion = "Teste";
-		Mockito.when(input.entryString()).thenReturn(testQuestion);
-		
-		questions.addQuestion();	
-		Mockito.verify(filesManager).addQuestionForm(captor.capture());
-		
-		String question = captor.getValue();		
-		Assert.assertTrue(!question.isEmpty());
+		this.removeQuestion = new RemoveQuestionForm(input, filesManager);
 	}
 	
 	@Test
@@ -56,7 +44,7 @@ class QuestionsTest {
 		Mockito.when(filesManager.readerQuestions()).thenReturn(listQuestions);
 		Mockito.when(input.entryNumber()).thenReturn(index);
 		
-		questions.removeQuestion();
+		removeQuestion.execute();
 		
 		String removed = listFakeQuestions().get(index -1);
 		Assert.assertTrue(!listQuestions.contains(removed));

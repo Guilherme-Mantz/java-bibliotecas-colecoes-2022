@@ -1,15 +1,15 @@
-package br.com.codar.application.options;
+package br.com.codar.application.options.primaryoptions;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.codar.application.Program;
+import br.com.codar.application.options.Option;
 import br.com.codar.manager.FilesManager;
 import br.com.codar.utils.CompareUtil;
 import br.com.codar.utils.DataInput;
 import br.com.codar.utils.ValidationUtil;
 
-public class Register {
+public class Register implements Option{
 	
 	private DataInput input;
 	private FilesManager filesManager;
@@ -19,7 +19,13 @@ public class Register {
 		this.filesManager = filesManager;
 	}
 	
-	public void registration() {
+	@Override
+	public String getDescription() {
+		return "Candidatar-se";
+	}
+
+	@Override
+	public void execute() {
 		System.out.println();
 		System.out.println("Você está se candidatando, por favor informe seus dados: ");
 		System.out.println();
@@ -40,7 +46,7 @@ public class Register {
 				}
 
 				if (!ValidationUtil.validAge(age)) {
-					System.exit(0);
+					return;
 				}
 				answers.add(age);
 			}
@@ -59,8 +65,7 @@ public class Register {
 
 		filesManager.addCandidate(answers);
 		System.out.println("Cadastro realizado!");
-
-		Program.operations();
+		
 	}
 
 }

@@ -1,48 +1,28 @@
-package br.com.codar.application.options;
+package br.com.codar.application.options.primaryoptions;
 
 import java.util.InputMismatchException;
 import java.util.List;
 
-import br.com.codar.application.Program;
+import br.com.codar.application.options.Option;
 import br.com.codar.manager.FilesManager;
 import br.com.codar.utils.DataInput;
 
-public class Questions {
-	
+public class RemoveQuestionForm implements Option{
 	private DataInput input;
 	private FilesManager filesManager;
 	
-	public Questions(DataInput input, FilesManager filesManager) {
+	public RemoveQuestionForm(DataInput input, FilesManager filesManager) {
 		this.input = input;
 		this.filesManager = filesManager;
 	}
-	
-	public void addQuestion() {
-		System.out.println("Digite a nova pergunta:");
 
-		String newQuestion = input.entryString();
-		List<String> questions = filesManager.readerQuestions();
-		
-		while(newQuestion.isEmpty()) {
-			System.out.println("O campo não pode ser vazio!");
-			newQuestion = input.entryString();
-		}
-
-		for (String question : questions) {
-			while (newQuestion.toUpperCase().equals(question.toUpperCase())) {
-				System.out.println("Essa pergunta já foi adicionada, tente outra!");
-				newQuestion = input.entryString();
-			}
-		}
-
-		filesManager.addQuestionForm(newQuestion);
-
-		System.out.println("Pergunta adicionada ao formulário!");
-		Program.operations();
-
+	@Override
+	public String getDescription() {
+		return "Remover pergunta";
 	}
 
-	public void removeQuestion() {
+	@Override
+	public void execute() {
 		System.out.println("Informe o número da pergunta que deseja remover: ");
 		List<String> questions = filesManager.readerQuestions();
 		
@@ -60,8 +40,7 @@ public class Questions {
 				numberQuestion = input.entryNumber();
 				
 				if(numberQuestion == -1) {
-					Program.operations();
-					input.entryNumber();
+					return;
 				}
 
 				while(numberQuestion <= 4 || numberQuestion > index) {
@@ -83,6 +62,6 @@ public class Questions {
 		}
 		
 		input.closeInput();
-		Program.operations();
+		
 	}
 }

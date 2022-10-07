@@ -5,11 +5,11 @@ import java.util.regex.Pattern;
 
 public class FormatUtil {
 	
-	public static String formatString(String name) {
+	public static String formatString(String text) {
 		
-        String nfdNormalizedString = Normalizer.normalize(name, Normalizer.Form.NFD);
+        String perguntaNormalizada = Normalizer.normalize(text, Normalizer.Form.NFD);
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
         
-        return pattern.matcher(nfdNormalizedString).replaceAll("").toUpperCase();
+        return pattern.matcher(perguntaNormalizada).replaceAll("").toUpperCase();
 	}
 }

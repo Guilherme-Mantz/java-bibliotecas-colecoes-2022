@@ -1,14 +1,14 @@
-package br.com.codar.application.options;
+package br.com.codar.application.options.primaryoptions;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import br.com.codar.application.Program;
+import br.com.codar.application.options.Option;
 import br.com.codar.manager.FilesManager;
 import br.com.codar.utils.DataInput;
 
-public class Candidates {
+public class Candidates implements Option {
 	
 	private DataInput input;
 	private FilesManager filesManager;
@@ -17,8 +17,14 @@ public class Candidates {
 		this.input = input;
 		this.filesManager = filesManager;
 	}
-	
-	public void listCandidates() {
+
+	@Override
+	public String getDescription() {
+		return "Listar formulários cadastrados";
+	}
+
+	@Override
+	public void execute() {
 		System.out.println("Qual filtro deseja utilizar?");
 		System.out.println("1 - Listar os nomes dos candidatos cadastrados agrupados por idade");
 		System.out.println("2 - Exibir a quantidade de candidatos por idade");
@@ -40,7 +46,6 @@ public class Candidates {
 			}
 
 			input.entryString();
-			Program.operations();
 			break;
 		case 2:
 
@@ -51,35 +56,12 @@ public class Candidates {
 					(age, count) -> System.out.println(count + " candidatos inscritos possuem " + age + " anos"));
 
 			input.entryNumber();
-			Program.operations();
 			break;
 		default:
 			System.out.println("Opção inválida!");
-			listCandidates();
+			execute();
 			break;
 		}
-
-	}
-
-	public void findCandidate() {
-		System.out.print("Por favor informe o nome do candidato que procura: ");
-		String nameCandidate = input.entryString();
-
-		while(nameCandidate.equals("")) {
-			System.out.println("O campo não pode estar vazio!");
-			nameCandidate = input.entryString();
-		}
 		
-		List<List<String>> listCandidates = filesManager.findCandidateByName(nameCandidate);
-
-		if (listCandidates.size() == 0) {
-			System.out.println("Nenhum candidato com este nome foi encontrado!");
-			Program.operations();
-		}
-
-		listCandidates.forEach(System.out::println);
-		
-		Program.operations();
-
 	}
 }
